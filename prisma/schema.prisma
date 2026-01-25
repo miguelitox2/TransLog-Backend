@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id        String   @id @unique @default(cuid())
+  name      String
+  email     String   @unique
+  role      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  branchId  String? // Relacionamento com a unidade
+  branch    Branch?  @relation(fields: [branchId], references: [id])
+}
+
+model Branch {
+  id      String   @id @default(uuid())
+  name    String // Ex: "Indaiatuba - Unidade 01"
+  city    String
+  ctes    cte[] // Uma unidade tem muitos CTEs
+  users   user[] // Uma unidade pode ter vários usuários (pesquisadores)
+  clients client[]
+}
+
+model cte {
+  id          String   @id @unique @default(cuid())
+  numberCte   String
+  openingData DateTime @default(now())
+  shipperName String
+  clientName  String
+  cause       String
+  priority    String?
+  status      String?
+  ro          Int?
+  value       Float?
+  accountable String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String?
+  branchId    String // O campo que isola o dado
+  branch      Branch   @relation(fields: [branchId], references: [id])
+}
+
+model client {
+  id        String   @id @unique @default(cuid())
+  name      String
+  phone     String
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  branchId  String
+  branch    Branch   @relation(fields: [branchId], references: [id])
+}

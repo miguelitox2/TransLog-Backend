@@ -5,9 +5,17 @@ import cteRoutes from "./routes/cteRoutes";
 import clientRoutes from "./routes/clientRoutes";
 
 const app = express();
-app.use(cors({
-  origin: "http://localhost:5173" // URL do seu Vite
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://trans-log-frontend.vercel.app", // Adicione a URL da Vercel aqui
+      "https://translogapp.com.br", // Já adicione o seu domínio novo também
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 app.use(express.json());
 
 app.use("/users", userRoutes);

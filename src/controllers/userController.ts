@@ -37,7 +37,7 @@ export const userController = {
           role: user.role,
         },
         authConfig.jwt.secret,
-        signOptions
+        signOptions,
       );
       return res.json({
         user: {
@@ -54,17 +54,17 @@ export const userController = {
     }
   },
 
- async listAll(req: Request, res: Response) {
-  try {
-    const users = await prisma.user.findMany({
-      include: {
-        branch: true // Traz os dados da unidade junto com o usuário
-      },
-      orderBy: { name: 'asc' }
-    });
-    return res.json(users);
-  } catch (error) {
-    return res.status(400).json({ error: "Erro ao listar usuários" });
-  }
-}
+  async listAll(req: Request, res: Response) {
+    try {
+      const users = await prisma.user.findMany({
+        include: {
+          branch: true, // Traz os dados da unidade junto com o usuário
+        },
+        orderBy: { name: "asc" },
+      });
+      return res.json(users);
+    } catch (error) {
+      return res.status(400).json({ error: "Erro ao listar usuários" });
+    }
+  },
 };

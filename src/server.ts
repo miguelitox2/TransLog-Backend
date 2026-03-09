@@ -3,6 +3,7 @@ import cors from "cors";
 import userRoutes from "./routes/userRoutes";
 import cteRoutes from "./routes/cteRoutes";
 import clientRoutes from "./routes/clientRoutes";
+import barcodeRoutes from "./routes/barcodeRoutes";
 
 const app = express();
 app.use(
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/ctes", cteRoutes);
 app.use("/clients", clientRoutes);
+app.use("/barcode", barcodeRoutes);
 
 app.listen(3333, () => {
   console.log("-----------------------------------------");
